@@ -1,0 +1,161 @@
+/* --- サイドバーレイアウト --- */
+:root{
+  --sidebar-width: 220px;
+  --sidebar-bg: #4a90e2; /* ヘッダーと合わせる */
+  --sidebar-text: #fff;
+  --content-bg: #f9f9f9;
+}
+
+/* 全体調整：ページコンテンツをサイドバー分だけ右に寄せる */
+body {
+  font-family: "Yu Gothic", sans-serif;
+  background-color: var(--content-bg);
+  color: #333;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  min-height: 100vh;
+}
+
+.top-right-image {
+  position: absolute;  /* fixedではなくabsoluteにする */
+  top: 10px;        /* 上からの距離 */
+  right: 10px;      /* 右からの距離 */
+  width: 300px;      /* 画像の幅（必要に応じて調整） */
+  height: auto;     /* 高さは自動 */
+  z-index: 2000;    /* サイドバーやヘッダーより前面に表示 */
+}
+
+
+/* サイドバー */
+.sidebar {
+  width: var(--sidebar-width);
+  min-width: var(--sidebar-width);
+  background: var(--sidebar-bg);
+  color: var(--sidebar-text);
+  padding: 1rem 0.5rem;
+  box-sizing: border-box;
+  position: fixed;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  overflow-y: auto;
+  transition: transform 0.25s ease;
+  z-index: 1000;
+}
+
+/* サイドバーを閉じた（小画面用） */
+.sidebar.closed {
+  transform: translateX(-100%);
+}
+
+/* サイドバー ヘッダー */
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 0.5rem 1rem 0.5rem;
+  border-bottom: 1px solid rgba(255,255,255,0.08);
+}
+
+.sidebar-header h2 {
+  margin: 0;
+  font-size: 1.1rem;
+  color: var(--sidebar-text);
+}
+
+/* トグルボタン（小さい画面で目立たせる）*/
+.sidebar-toggle {
+  background: transparent;
+  border: none;
+  color: var(--sidebar-text);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: none; /* デスクトップでは非表示 */
+}
+
+/* ナビリンク */
+.sidebar-nav {
+  margin-top: 1rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+  padding: 0 0.5rem;
+}
+
+.sidebar-link {
+  display: block;
+  padding: 0.6rem 0.75rem;
+  color: var(--sidebar-text);
+  text-decoration: none;
+  border-radius: 6px;
+  font-weight: 500;
+}
+
+.sidebar-link:hover {
+  background: rgba(255,255,255,0.08);
+}
+
+/* ----------------------------- */
+/* ✅ ページコンテンツとフッター調整 */
+/* ----------------------------- */
+.page-content {
+  margin-left: var(--sidebar-width);
+  padding: 1rem;
+  flex: 1;
+  box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;  /* 縦並びに */
+  min-height: 100vh;       /* 画面全体を使う */
+}
+
+header {
+  background-color: #4a90e2;
+  color: white;
+  padding: 1em;
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+/* main部分に高さを伸ばす設定 */
+main {
+  flex: 1; /* これで空きスペースを埋める */
+  padding: 1em 0;
+}
+
+/* ✅ フッターが常に一番下に来る */
+footer {
+  background-color: #333;
+  color: white;
+  text-align: center;
+  padding: 1em;
+  position: relative; /* 固定は解除 */
+  width: 100%;
+  margin-top: auto;   /* 一番下に押し下げる */
+}
+
+/* --- レスポンシブ --- */
+@media (max-width: 800px) {
+  /* サイドバーを隠して、トグルを表示 */
+  .sidebar {
+    transform: translateX(-100%);
+  }
+  .sidebar-toggle {
+    display: inline-block;
+  }
+  .sidebar.closed {
+    transform: translateX(-100%);
+  }
+  .sidebar:not(.closed) {
+    transform: translateX(0);
+    position: fixed;
+    width: 70%;
+    max-width: 300px;
+  }
+
+  /* コンテンツは全幅にする */
+  .page-content {
+    margin-left: 0;
+  }
+}

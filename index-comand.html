@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>私のホームページ</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <a href="https://aws.amazon.com/console/" target="_blank" rel="noopener noreferrer">
+  <img src="aws.png" alt="右上画像" class="top-right-image">
+  </a>
+
+  <!--  サイドバーを読み込むための受け皿 --> 
+  <div id="sidebar-container"></div>
+
+  <!-- メインコンテント -->
+  <div class="page-content">
+    <div id="header-container"></div>
+
+    <main>
+      <section id="about">
+        <h2>コマンド</h2>
+        <p>こんにちは！私は勉強しています。</p>
+      </section>
+      <section id="works">
+        <h2>作品紹介</h2>
+        <p>これまでに作成したサイトを紹介します。</p>
+      </section>
+      <section id="contact">
+        <h2>お問い合わせ</h2>
+        <p>ご連絡は example@example.com までお願いします。</p>
+      </section>
+    </main>
+
+    <div id="footer-container"></div>
+  </div>
+
+  <script>
+    fetch("sidebar-comand.html")
+      .then(res => res.text())
+      .then(html => {
+        document.getElementById("sidebar-container").innerHTML = html;
+        // 読み込んだあとにトグルボタンの処理を登録
+        const btn = document.getElementById('sidebarToggle');
+        const sidebar = document.getElementById('sidebar');
+        btn.addEventListener('click', () => {
+          sidebar.classList.toggle('closed');
+        });
+      });
+  </script>
+  <script>
+  fetch("header.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("header-container").innerHTML = html;
+    });
+</script>
+<script>
+  fetch("footer.html")
+    .then(res => res.text())
+    .then(html => {
+      document.getElementById("footer-container").innerHTML = html;
+    });
+</script>
+
+</body>
+</html>
